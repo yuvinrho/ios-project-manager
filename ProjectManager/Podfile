@@ -7,5 +7,6 @@ target 'ProjectManager' do
 
   # Pods for ProjectManager
   pod 'FirebaseDatabase'
+  pod 'FirebaseAuth'
 
 end

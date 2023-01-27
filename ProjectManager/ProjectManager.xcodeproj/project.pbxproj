@@ -11,7 +11,9 @@
 		1AB76E0C297E695200E56344 /* UITableViewCell+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB76E0B297E695200E56344 /* UITableViewCell+Reusable.swift */; };
 		1AB76E10297E8BAC00E56344 /* ProjectTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB76E0F297E8BAC00E56344 /* ProjectTableViewController.swift */; };
 		1AB76E402980B74D00E56344 /* ProjectDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB76E3F2980B74D00E56344 /* ProjectDelegate.swift */; };
-		1AB76E442981890800E56344 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1AB76E432981890700E56344 /* GoogleService-Info.plist */; };
+		1AB76E4A2981935F00E56344 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1AB76E492981935F00E56344 /* GoogleService-Info.plist */; };
+		1AB76E4E2982956100E56344 /* ProjectError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB76E4D2982956100E56344 /* ProjectError.swift */; };
+		1AB76E5129842BF300E56344 /* DatabaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB76E5029842BF300E56344 /* DatabaseError.swift */; };
 		1ABD658029768574002E288B /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABD657F29768574002E288B /* Project.swift */; };
 		1ABD658629768753002E288B /* CRUDable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABD658529768753002E288B /* CRUDable.swift */; };
 		1ABD65892976883D002E288B /* ProjectManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABD65882976883D002E288B /* ProjectManager.swift */; };
@@ -37,7 +39,9 @@
 		1AB76E0B297E695200E56344 /* UITableViewCell+Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Reusable.swift"; sourceTree = "<group>"; };
 		1AB76E0F297E8BAC00E56344 /* ProjectTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectTableViewController.swift; sourceTree = "<group>"; };
 		1AB76E3F2980B74D00E56344 /* ProjectDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDelegate.swift; sourceTree = "<group>"; };
-		1AB76E432981890700E56344 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1AB76E492981935F00E56344 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1AB76E4D2982956100E56344 /* ProjectError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectError.swift; sourceTree = "<group>"; };
+		1AB76E5029842BF300E56344 /* DatabaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseError.swift; sourceTree = "<group>"; };
 		1ABD657F29768574002E288B /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
 		1ABD658529768753002E288B /* CRUDable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CRUDable.swift; sourceTree = "<group>"; };
 		1ABD65882976883D002E288B /* ProjectManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectManager.swift; sourceTree = "<group>"; };
@@ -72,6 +76,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1AB76E4F29842A3200E56344 /* Error */ = {
+			isa = PBXGroup;
+			children = (
+				1AB76E4D2982956100E56344 /* ProjectError.swift */,
+				1AB76E5029842BF300E56344 /* DatabaseError.swift */,
+			);
+			path = Error;
+			sourceTree = "<group>";
+		};
 		1ABD657A297682F2002E288B /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -179,8 +192,9 @@
 		C7431F0425F51E1D0094C4CF /* ProjectManager */ = {
 			isa = PBXGroup;
 			children = (
-				1AB76E432981890700E56344 /* GoogleService-Info.plist */,
+				1AB76E492981935F00E56344 /* GoogleService-Info.plist */,
 				1ABD659A29769A81002E288B /* Extensions */,
+				1AB76E4F29842A3200E56344 /* Error */,
 				1ABD658729768830002E288B /* Managers */,
 				1ABD658429768743002E288B /* Protocols */,
 				1ABD657C29768311002E288B /* Models */,
@@ -261,7 +275,7 @@
 			files = (
 				C7431F1225F51E1E0094C4CF /* LaunchScreen.storyboard in Resources */,
 				C7431F0F25F51E1E0094C4CF /* Assets.xcassets in Resources */,
-				1AB76E442981890800E56344 /* GoogleService-Info.plist in Resources */,
+				1AB76E4A2981935F00E56344 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -317,8 +331,10 @@
 				1ABD65AC2976A753002E288B /* DummyProjects.swift in Sources */,
 				1ABD65982976999F002E288B /* Reusable.swift in Sources */,
 				C7431F0A25F51E1D0094C4CF /* ProjectListViewController.swift in Sources */,
+				1AB76E5129842BF300E56344 /* DatabaseError.swift in Sources */,
 				1ABD658629768753002E288B /* CRUDable.swift in Sources */,
 				1ABD6596297698E0002E288B /* ProjectTableViewCell.swift in Sources */,
+				1AB76E4E2982956100E56344 /* ProjectError.swift in Sources */,
 				1ABD6595297698E0002E288B /* ProjectTableView.swift in Sources */,
 				C7431F0625F51E1D0094C4CF /* AppDelegate.swift in Sources */,
 				1ABD658E2976963A002E288B /* ProjectViewController.swift in Sources */,
