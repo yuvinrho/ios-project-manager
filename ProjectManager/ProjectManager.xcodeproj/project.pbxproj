@@ -12,6 +12,7 @@
 		1AB76E10297E8BAC00E56344 /* ProjectTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB76E0F297E8BAC00E56344 /* ProjectTableViewController.swift */; };
 		1AB76E402980B74D00E56344 /* ProjectDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB76E3F2980B74D00E56344 /* ProjectDelegate.swift */; };
 		1AB76E4A2981935F00E56344 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1AB76E492981935F00E56344 /* GoogleService-Info.plist */; };
+		1AB76E4C2982717200E56344 /* ProjectResponseDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB76E4B2982717200E56344 /* ProjectResponseDTO.swift */; };
 		1AB76E4E2982956100E56344 /* ProjectError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB76E4D2982956100E56344 /* ProjectError.swift */; };
 		1AB76E5129842BF300E56344 /* DatabaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB76E5029842BF300E56344 /* DatabaseError.swift */; };
 		1ABD658029768574002E288B /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ABD657F29768574002E288B /* Project.swift */; };
@@ -40,6 +41,7 @@
 		1AB76E0F297E8BAC00E56344 /* ProjectTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectTableViewController.swift; sourceTree = "<group>"; };
 		1AB76E3F2980B74D00E56344 /* ProjectDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectDelegate.swift; sourceTree = "<group>"; };
 		1AB76E492981935F00E56344 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		1AB76E4B2982717200E56344 /* ProjectResponseDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectResponseDTO.swift; sourceTree = "<group>"; };
 		1AB76E4D2982956100E56344 /* ProjectError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectError.swift; sourceTree = "<group>"; };
 		1AB76E5029842BF300E56344 /* DatabaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatabaseError.swift; sourceTree = "<group>"; };
 		1ABD657F29768574002E288B /* Project.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
@@ -113,6 +115,7 @@
 				1ABD65AB2976A753002E288B /* DummyProjects.swift */,
 				1ABD657F29768574002E288B /* Project.swift */,
 				1A42616F297BB97A005C5ACD /* ProjectStatus.swift */,
+				1AB76E4B2982717200E56344 /* ProjectResponseDTO.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -347,6 +350,7 @@
 				1ABD659C29769A8E002E288B /* Date.swift in Sources */,
 				1AB76E0C297E695200E56344 /* UITableViewCell+Reusable.swift in Sources */,
 				1ABD65BB2977229B002E288B /* ProjectView.swift in Sources */,
+				1AB76E4C2982717200E56344 /* ProjectResponseDTO.swift in Sources */,
 				1ABD658029768574002E288B /* Project.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
