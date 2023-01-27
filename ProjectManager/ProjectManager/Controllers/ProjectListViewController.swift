@@ -8,7 +8,11 @@ import UIKit
 
 final class ProjectListViewController: UIViewController {
     // MARK: Properties
-    private let projectManager: ProjectManager
+    private let projectManager: any CRUDable
+    private var databaseManager: DatabaseManager? {
+        return projectManager as? DatabaseManager
+    }
+
     private var todoList: [Project] = [] {
         didSet {
             todoViewController.update(with: todoList)
@@ -52,14 +56,14 @@ final class ProjectListViewController: UIViewController {
         super.viewDidLoad()
 
         configureNavigationBar()
-        createDummyProject()
+        fetchProjectList()
         addChildViewControllers()
         configureView()
         configureConstraints()
         updateChildViewController()
     }
 
-    init(projectManager: ProjectManager) {
+    init(projectManager: any CRUDable) {
         self.projectManager = projectManager
         super.init(nibName: nil, bundle: nil)
     }
@@ -92,11 +96,45 @@ final class ProjectListViewController: UIViewController {
     }
 
     private func createDummyProject() {
-        DummyProjects.projects.forEach {
-            projectManager.create(project: $0)
+        guard let databaseManager = projectManager as? DatabaseManager else {
+            fatalError("데이터베이스 매니저가 없음")
         }
 
-        updateProjectList()
+        DummyProjects.projects.forEach {
+            databaseManager.create(data: $0) { result in
+                switch result {
+                case .success(_):
+                    print("성공")
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
+        }
+    }
+
+    private func fetchProjectList() {
+        fetchProjectList(status: .todo)
+        fetchProjectList(status: .doing)
+        fetchProjectList(status: .done)
+    }
+
+    private func fetchProjectList(status: ProjectStatus) {
+        databaseManager?.read(status: status) { result in
+            switch result {
+            case .success(let fetchedData):
+                print("인터넷연결됨")
+                switch status {
+                case .todo:
+                    self.todoList = fetchedData
+                case .doing:
+                    self.doingList = fetchedData
+                case .done:
+                    self.doneList = fetchedData
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 
     private func addChildViewControllers() {
@@ -138,36 +176,22 @@ final class ProjectListViewController: UIViewController {
             }
         }
     }
-
-    private func updateProjectList() {
-        if todoList != projectManager.read(status: .todo) {
-            todoList = projectManager.read(status: .todo)
-        }
-
-        if doingList != projectManager.read(status: .doing) {
-            doingList = projectManager.read(status: .doing)
-        }
-
-        if doneList != projectManager.read(status: .done) {
-            doneList = projectManager.read(status: .done)
-        }
-    }
 }
 
 // MARK: Project Delegate
 extension ProjectListViewController: ProjectDelegate {
     func create(project: Project) {
-        projectManager.create(project: project)
-        updateProjectList()
+       // databaseManager?.create(data: project)
+        fetchProjectList()
     }
 
     func update(project: Project) {
-        projectManager.update(project: project)
-        updateProjectList()
+       // databaseManager?.update(data: project)
+        fetchProjectList()
     }
 
     func delete(project: Project) {
-        projectManager.delete(project: project)
-        updateProjectList()
+       // databaseManager?.delete(data: project)
+        fetchProjectList()
     }
 }
