@@ -5,7 +5,7 @@
 //  Created by 로빈 on 2023/01/21.
 //
 
-enum ProjectStatus {
+enum ProjectStatus: String, Codable {
     case todo
     case doing
     case done

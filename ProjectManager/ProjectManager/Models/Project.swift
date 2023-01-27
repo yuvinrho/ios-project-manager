@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Project: Hashable {
+struct Project: Hashable, Encodable {
     let id: UUID = .init()
     var status: ProjectStatus
     var title: String
