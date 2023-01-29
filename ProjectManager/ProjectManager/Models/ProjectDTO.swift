@@ -7,17 +7,19 @@
 
 import Foundation
 
-struct ProjectResponseDTO: Decodable {
+struct ProjectDTO: Codable {
     let id: UUID
     let status: ProjectStatus
     let title: String
     let description: String
     let dueDate: Date
+    let lastModifiedDate: Date
 }
 
-extension ProjectResponseDTO {
+extension ProjectDTO {
     func toDomain() -> Project {
-        return Project(status: self.status,
+        return Project(id: self.id,
+                       status: self.status,
                        title: self.title,
                        description: self.description,
                        dueDate: self.dueDate)

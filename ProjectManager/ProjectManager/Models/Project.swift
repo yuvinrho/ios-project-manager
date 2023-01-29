@@ -7,17 +7,19 @@
 
 import Foundation
 
-struct Project: Hashable, Encodable {
-    let id: UUID = .init()
+struct Project: Hashable {
+    let id: UUID
     var status: ProjectStatus
     var title: String
     var description: String
     var dueDate: Date
 
-    init(status: ProjectStatus,
+    init(id: UUID = .init(),
+         status: ProjectStatus,
          title: String,
          description: String,
          dueDate: Date) {
+        self.id = id
         self.status = status
         self.title = title
         self.description = description
@@ -28,5 +30,14 @@ struct Project: Hashable, Encodable {
 extension Project {
     var isDueDateExpired: Bool {
         return dueDate.isExpired
+    }
+
+    func toDTO() -> ProjectDTO {
+        return ProjectDTO(id: self.id,
+                          status: self.status,
+                          title: self.title,
+                          description: self.description,
+                          dueDate: self.dueDate,
+                          lastModifiedDate: Date())
     }
 }
