@@ -7,6 +7,6 @@
 
 protocol ProjectDelegate: AnyObject {
     func create(project: Project)
-    func update(project: Project)
-    func delete(projectID: String)
+    func update(project: Project, history: String?)
+    func delete(project: Project)
 }
