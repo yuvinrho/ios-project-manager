@@ -8,7 +8,7 @@
 import Foundation
 
 struct ProjectDTO: Codable {
-    let id: UUID
+    let id: String
     let status: ProjectStatus
     let title: String
     let description: String

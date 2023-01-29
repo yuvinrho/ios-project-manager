@@ -7,14 +7,14 @@
 
 import Foundation
 
-struct Project: Hashable {
-    let id: UUID
+struct Project: Encodable, Hashable {
+    let id: String
     var status: ProjectStatus
     var title: String
     var description: String
     var dueDate: Date
 
-    init(id: UUID = .init(),
+    init(id: String = UUID().uuidString,
          status: ProjectStatus,
          title: String,
          description: String,
