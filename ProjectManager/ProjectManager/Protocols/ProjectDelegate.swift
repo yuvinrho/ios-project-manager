@@ -8,5 +8,5 @@
 protocol ProjectDelegate: AnyObject {
     func create(project: Project)
     func update(project: Project)
-    func delete(project: Project)
+    func delete(projectID: String)
 }
