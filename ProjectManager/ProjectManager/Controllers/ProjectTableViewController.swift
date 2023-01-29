@@ -94,25 +94,24 @@ final class ProjectTableViewController: UITableViewController {
     }
 
     // MARK: Popover
-    private func move(project: Project, to status: ProjectStatus) {
+    private func move(project: Project, to status: ProjectStatus, history: String) {
         var statusChangedProject = project
         statusChangedProject.status = status
 
-        delegate?.delete(project: project)
-        delegate?.create(project: statusChangedProject)
+        delegate?.update(project: statusChangedProject, history: history)
     }
 
     private func makeAlertController(with project: Project) -> UIAlertController {
         let MoveTodoAction = UIAlertAction(title: "Move To TODO", style: .default) { [weak self] _ in
-            self?.move(project: project, to: .todo)
+            self?.move(project: project, to: .todo, history: "Moved '\(project.title)' from \(project.status.name) to TODO.")
         }
 
         let MoveDoingAction = UIAlertAction(title: "Move To DOING", style: .default) { [weak self] _ in
-            self?.move(project: project, to: .doing)
+            self?.move(project: project, to: .doing, history: "Moved '\(project.title)' from \(project.status.name) to DOING.")
         }
 
         let MoveDoneAction = UIAlertAction(title: "Move To DONE", style: .default) { [weak self] _ in
-            self?.move(project: project, to: .done)
+            self?.move(project: project, to: .done, history: "Moved '\(project.title)' from \(project.status.name) to DONE.")
         }
 
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)

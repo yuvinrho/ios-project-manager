@@ -79,22 +79,33 @@ final class ProjectViewController: UIViewController {
         project.dueDate = projectView.dueDate
     }
 
-    private func touchUpRightBarButton() {
+    private func doneButtonAction() {
         fetchProjectViewData()
-        delegate?.update(project: project)
+        delegate?.create(project: project)
         
         dismiss(animated: true, completion: nil)
     }
 
-    private func makeRightBarButton() -> UIBarButtonItem {
-        let rightButtonAction = UIAction { [weak self] _ in
-            self?.touchUpRightBarButton()
-        }
+    private func editButtonAction() {
+        fetchProjectViewData()
+        delegate?.update(project: project, history: nil)
 
+        dismiss(animated: true, completion: nil)
+    }
+
+    private func makeRightBarButton() -> UIBarButtonItem {
         switch mode {
         case .add:
+            let rightButtonAction = UIAction { [weak self] _ in
+                self?.doneButtonAction()
+            }
+
             return UIBarButtonItem(systemItem: .done, primaryAction: rightButtonAction)
         case .edit:
+            let rightButtonAction = UIAction { [weak self] _ in
+                self?.editButtonAction()
+            }
+
             return UIBarButtonItem(systemItem: .edit, primaryAction: rightButtonAction)
         }
     }

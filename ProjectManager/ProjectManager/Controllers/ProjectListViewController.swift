@@ -8,7 +8,7 @@ import UIKit
 
 final class ProjectListViewController: UIViewController {
     // MARK: Properties
-    private let projectManager: any CRUDable
+    private let projectManager: any RemoteDatabaseManageable
     private var databaseManager: DatabaseManager? {
         return projectManager as? DatabaseManager
     }
@@ -40,6 +40,7 @@ final class ProjectListViewController: UIViewController {
     private lazy var doneViewController = ProjectTableViewController(status: .done,
                                                                 tableView: ProjectTableView(),
                                                                 delegate: self)
+    private let historyViewController = ProjectHistoryTableViewController(tableView: ProjectHistoryTableView())
 
     private let stackView: UIStackView = {
         let stackView = UIStackView()
@@ -56,14 +57,14 @@ final class ProjectListViewController: UIViewController {
         super.viewDidLoad()
 
         configureNavigationBar()
-        fetchProjectList()
         addChildViewControllers()
         configureView()
         configureConstraints()
+        fetchProjectList()
         updateChildViewController()
     }
 
-    init(projectManager: any CRUDable) {
+    init(projectManager: any RemoteDatabaseManageable) {
         self.projectManager = projectManager
         super.init(nibName: nil, bundle: nil)
     }
@@ -80,19 +81,41 @@ final class ProjectListViewController: UIViewController {
         present(UINavigationController(rootViewController: projectViewController), animated: false)
     }
 
-    private func makeRightNavigationBarButton() -> UIBarButtonItem {
-        let touchUpAddButtonAction = UIAction { [weak self] _ in
+    private func presentProjectHistoryViewController() {
+        historyViewController.preferredContentSize = CGSize(width: 500, height: 700)
+        historyViewController.modalPresentationStyle = .popover
+
+        let popoverController = historyViewController.popoverPresentationController
+
+        if #available(iOS 16.0, *) {
+            popoverController?.sourceItem = navigationItem.leftBarButtonItem
+        } else {
+            popoverController?.barButtonItem = navigationItem.leftBarButtonItem
+        }
+
+        present(historyViewController, animated: false)
+    }
+
+    private func makeAddBarButtonAction() -> UIAction {
+        let action = UIAction { [weak self] _ in
             self?.presentProjectViewController()
         }
 
-        let addButton = UIBarButtonItem(systemItem: .add, primaryAction: touchUpAddButtonAction)
+        return action
+    }
 
-        return addButton
+    private func makeHistoryBarButtonAction() -> UIAction {
+        let action = UIAction { [weak self] _ in
+            self?.presentProjectHistoryViewController()
+        }
+
+        return action
     }
 
     private func configureNavigationBar() {
         navigationItem.title = "Project Manager"
-        navigationItem.rightBarButtonItem = makeRightNavigationBarButton()
+        navigationItem.rightBarButtonItem = UIBarButtonItem(systemItem: .add, primaryAction: makeAddBarButtonAction())
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "History", primaryAction: makeHistoryBarButtonAction())
     }
 
     private func createDummyProject() {
@@ -104,7 +127,7 @@ final class ProjectListViewController: UIViewController {
             databaseManager.create(data: $0) { result in
                 switch result {
                 case .success(_):
-                    print("성공")
+                    return
                 case .failure(let error):
                     print(error.localizedDescription)
                 }
@@ -122,13 +145,15 @@ final class ProjectListViewController: UIViewController {
         databaseManager?.read(status: status) { result in
             switch result {
             case .success(let fetchedData):
-                print("인터넷연결됨")
                 switch status {
                 case .todo:
+                    if self.todoList == fetchedData { return }
                     self.todoList = fetchedData
                 case .doing:
+                    if self.doingList == fetchedData { return }
                     self.doingList = fetchedData
                 case .done:
+                    if self.doneList == fetchedData { return }
                     self.doneList = fetchedData
                 }
             case .failure(let error):
@@ -181,17 +206,43 @@ final class ProjectListViewController: UIViewController {
 // MARK: Project Delegate
 extension ProjectListViewController: ProjectDelegate {
     func create(project: Project) {
-       // databaseManager?.create(data: project)
-        fetchProjectList()
+        historyViewController.addHistory(ProjectHistory(history: "Added '\(project.title)'"))
+
+        databaseManager?.create(data: project) { result in
+            switch result {
+            case .success(_):
+                self.fetchProjectList()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 
-    func update(project: Project) {
-       // databaseManager?.update(data: project)
-        fetchProjectList()
+    func update(project: Project, history: String?) {
+        if let history {
+            historyViewController.addHistory(ProjectHistory(history: history))
+        }
+
+        databaseManager?.update(data: project) { result in
+            switch result {
+            case .success(_):
+                self.fetchProjectList()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 
     func delete(project: Project) {
-       // databaseManager?.delete(data: project)
-        fetchProjectList()
+        historyViewController.addHistory(ProjectHistory(history: "Removed '\(project.title)' from \(project.status.name)"))
+
+        databaseManager?.delete(data: project) { result in
+            switch result {
+            case .success(_):
+                self.fetchProjectList()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
 }
