@@ -7,19 +7,16 @@
 
 import FirebaseDatabase
 
-struct DatabaseManager: CRUDable {
-    typealias DataType = Project
+class DatabaseManager: RemoteDatabaseManageable {
+    private let reference = Database.database().reference(withPath: "projects")
 
-    private let reference = Database.database().reference().child("projects")
-
-    func create(data: Project, completion: @escaping (Result<Bool, Error>) -> ()) {
+    func create(data: Project, completion: @escaping (Result<Bool, DatabaseError>) -> ()) {
         do {
-            let encodedData = try JSONEncoder().encode(data)
+            let encodedData = try JSONEncoder().encode(data.toDTO())
             let json = try JSONSerialization.jsonObject(with: encodedData)
-
-            reference.childByAutoId().setValue(json) { (error, _ ) in
+            reference.child(data.id).setValue(json) { (error, ref ) in
                 if error != nil {
-                    completion(.failure(DatabaseError.createFailedError))
+                    completion(.failure(.createFailedError))
                 } else {
                     completion(.success(true))
                 }
@@ -31,45 +28,52 @@ struct DatabaseManager: CRUDable {
         }
     }
 
-    func read(completion: @escaping (Result<[Project], Error>) -> ()) {
+    func read(status: ProjectStatus? = nil, completion: @escaping (Result<[Project], DatabaseError>) -> ()) {
+        let reference = status == nil ? reference : reference.queryOrdered(byChild: "status").queryEqual(toValue: status?.rawValue)
+
         reference.observeSingleEvent(of: .value) { snapshot  in
             guard let json = snapshot.value as? [String: Any] else {
-                return completion(.failure(DatabaseError.createFailedError))
+                return completion(.success([]))
             }
 
             do {
                 let data = try JSONSerialization.data(withJSONObject: Array(json.values))
-                let response = try JSONDecoder().decode([ProjectResponseDTO].self, from: data)
-
+                let response = try JSONDecoder()
+                    .decode([ProjectDTO].self, from: data)
+                    .sorted { $0.lastModifiedDate < $1.lastModifiedDate }
                 completion(.success(response.map { $0.toDomain() }))
             } catch {
-                fatalError(ProjectError.decodingError.localizedDescription)
+                print(error)
             }
         }
     }
 
-    func read(status: ProjectStatus, completion: @escaping (Result<[Project], Error>) -> ()) {
-        reference.queryOrdered(byChild: "status").queryEqual(toValue: status.rawValue).observeSingleEvent(of: .value) { snapshot  in
-            guard let json = snapshot.value as? [String: Any] else {
-                return completion(.failure(DatabaseError.createFailedError))
-            }
+    func update(data: Project, completion: @escaping (Result<Bool, DatabaseError>) -> ()) {
+        do {
+            let encodedData = try JSONEncoder().encode(data.toDTO())
+            let json = try JSONSerialization.jsonObject(with: encodedData)
 
-            do {
-                let data = try JSONSerialization.data(withJSONObject: Array(json.values))
-                let response = try JSONDecoder().decode([ProjectResponseDTO].self, from: data)
-
-                completion(.success(response.map { $0.toDomain() }))
-            } catch {
-                fatalError(ProjectError.decodingError.localizedDescription)
+            reference.child(data.id).setValue(json) { (error, _ ) in
+                if error != nil {
+                    completion(.failure(.updateFailedError))
+                } else {
+                    completion(.success(true))
+                }
             }
+        } catch ProjectError.encodingError {
+            fatalError(ProjectError.encodingError.localizedDescription)
+        } catch {
+            fatalError(error.localizedDescription)
         }
     }
 
-    func update(data item: Project) {
-        fatalError()
-    }
-
-    func delete(data item: Project) {
-        fatalError()
+    func delete(data: Project, completion: @escaping (Result<Bool, DatabaseError>) -> ()) {
+        reference.child(data.id).removeValue { error, _ in
+            if error != nil {
+                completion(.failure(.removeFailedError))
+            } else {
+                completion(.success(true))
+            }
+        }
     }
 }
