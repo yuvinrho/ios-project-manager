@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1A087CBB2986A1A000FC2056 /* ProjectHistoryTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A087CBA2986A1A000FC2056 /* ProjectHistoryTableView.swift */; };
+		1A087CBD2986A1D000FC2056 /* ProjectHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A087CBC2986A1D000FC2056 /* ProjectHistoryTableViewCell.swift */; };
 		1A426170297BB97A005C5ACD /* ProjectStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A42616F297BB97A005C5ACD /* ProjectStatus.swift */; };
 		1AB76E0C297E695200E56344 /* UITableViewCell+Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB76E0B297E695200E56344 /* UITableViewCell+Reusable.swift */; };
 		1AB76E10297E8BAC00E56344 /* ProjectTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1AB76E0F297E8BAC00E56344 /* ProjectTableViewController.swift */; };
@@ -37,6 +39,8 @@
 
 /* Begin PBXFileReference section */
 		10561EBFC2B41286ABD088B1 /* Pods_ProjectManager.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProjectManager.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A087CBA2986A1A000FC2056 /* ProjectHistoryTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectHistoryTableView.swift; sourceTree = "<group>"; };
+		1A087CBC2986A1D000FC2056 /* ProjectHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectHistoryTableViewCell.swift; sourceTree = "<group>"; };
 		1A42616F297BB97A005C5ACD /* ProjectStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectStatus.swift; sourceTree = "<group>"; };
 		1AB76E0B297E695200E56344 /* UITableViewCell+Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableViewCell+Reusable.swift"; sourceTree = "<group>"; };
 		1AB76E0F297E8BAC00E56344 /* ProjectTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectTableViewController.swift; sourceTree = "<group>"; };
@@ -80,6 +84,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1A087CB92986A15300FC2056 /* ProjectHistoryTableView */ = {
+			isa = PBXGroup;
+			children = (
+				1A087CBA2986A1A000FC2056 /* ProjectHistoryTableView.swift */,
+				1A087CBC2986A1D000FC2056 /* ProjectHistoryTableViewCell.swift */,
+			);
+			path = ProjectHistoryTableView;
+			sourceTree = "<group>";
+		};
 		1AB76E4F29842A3200E56344 /* Error */ = {
 			isa = PBXGroup;
 			children = (
@@ -127,6 +140,7 @@
 			children = (
 				1ABD65BA2977229B002E288B /* ProjectView.swift */,
 				1ABD6599297699A7002E288B /* ProjectTableView */,
+				1A087CB92986A15300FC2056 /* ProjectHistoryTableView */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -338,6 +352,7 @@
 				1ABD65982976999F002E288B /* Reusable.swift in Sources */,
 				C7431F0A25F51E1D0094C4CF /* ProjectListViewController.swift in Sources */,
 				1AB76E5129842BF300E56344 /* DatabaseError.swift in Sources */,
+				1A087CBB2986A1A000FC2056 /* ProjectHistoryTableView.swift in Sources */,
 				1ABD658629768753002E288B /* CRUDable.swift in Sources */,
 				1ABD6596297698E0002E288B /* ProjectTableViewCell.swift in Sources */,
 				1AB76E4E2982956100E56344 /* ProjectError.swift in Sources */,
@@ -345,6 +360,7 @@
 				C7431F0625F51E1D0094C4CF /* AppDelegate.swift in Sources */,
 				1ABD658E2976963A002E288B /* ProjectViewController.swift in Sources */,
 				C7431F0825F51E1D0094C4CF /* SceneDelegate.swift in Sources */,
+				1A087CBD2986A1D000FC2056 /* ProjectHistoryTableViewCell.swift in Sources */,
 				1AB76E10297E8BAC00E56344 /* ProjectTableViewController.swift in Sources */,
 				1ABD6594297698E0002E288B /* ProjectTableViewHeaderView.swift in Sources */,
 				1ABD65892976883D002E288B /* ProjectManager.swift in Sources */,
